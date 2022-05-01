@@ -2,12 +2,12 @@ const functions = require('firebase-functions');
 
 const express = require('express');
 
-const app = express();
-app.get('/timestamp', (request, response) => {
-  response.send(`${Date.now()}`);
-})
+// const app = express();
+// app.get('/timestamp', (request, response) => {
+//   response.send(`${Date.now()}`);
+// })
 
-exports.app = functions.https.onRequest(app);
+// exports.app = functions.https.onRequest(app);
 
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
