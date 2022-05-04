@@ -46,6 +46,22 @@ export default {
   },
 
   router: {
-    
+    routes: [
+    {
+      name: 'index',
+      path: '/',
+      component: 'pages/index.vue'
+    },
+    {
+      name: 'home',
+      path: '/home',
+      component: 'pages/home.vue'
+    },
+    {
+      name: 'edit',
+      path: '/edit',
+      component: 'pages/edit.vue'
+    }
+  ]
   }
 }

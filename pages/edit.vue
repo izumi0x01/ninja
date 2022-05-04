@@ -1,16 +1,17 @@
 <template>
   
   <div id="container">
-    <div id="left-sidebar">
-
+    
+    <div class=" border-r-2 " id="left-sidebar">
+      hoge
     </div>
     <div id="drawarea">
-
+      hugahuga
     </div>
-    <div id="right-sidebar">
-
+    <div class=" border-l-2 " id="right-sidebar">
+      hoge
     </div>
-    <div id="toolbar">
+    <div class=" border-t-2 " id="toolbar">
 
     </div>
   </div>
@@ -20,37 +21,36 @@
 <style lang="css" scoped>
 
     #container{
-    max-width: 100%;
-    max-height: 100%;
+      width: 100vw;
+      height: 100vh;
     /* font-size: 62.5%; */
     display: grid;
-    grid-template-rows: 20% 80% 20%;
-    grid-template-columns: 70% 30%;
+    grid-template-rows: 70% 30%;
+    grid-template-columns: 240px auto 240px;
+
+    /* 1xl: '48px', lg: '24px'*/
   }
 
   #left_sidebar{
     grid-row: 1/2;
     grid-column: 1/2;
-    background-color: blue;
   }
 
   #drawarea{
     grid-row: 1/2;
     grid-column: 2/3;
-    background-color: red;
   }
 
   #right_sidebar{
     grid-row: 1/2;
     grid-column: 3/4;
-    background-color: green;
 
   }
 
   #toolbar{
-    grid-row: 1/2;
+    grid-row: 2/3;
     grid-column: 1/4;
-    background-color: pink;
+    background-color: gray;
   }
 
 </style>

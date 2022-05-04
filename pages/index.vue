@@ -2,7 +2,7 @@
   <!-- <link-text text="なんかurl" @on-click="clickUrl()" /> -->
   <div class=" m-2 bg-gray-400">
       <div class="h-48 bg-red-700">
-          
+          <button class="bg-gray-100" @click="RedirectToEditPage">作品を作成する</button>
       </div>
       <div class=" flex flex-row justify-center m-5 ">
         <CCard :title="Ccard_title" :imgsrc="require('@/static/apples.jpg')"/>
@@ -43,6 +43,9 @@ export default class index extends Vue {
 
   count = 0;
 
+  RedirectToEditPage(){
+    return  this.$router.push('/edit');
+  }
 
 }
 </script>
