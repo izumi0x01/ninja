@@ -1,5 +1,5 @@
 <template>
-  <div class=".border-opacity-0 .border-current rounded-md bg-white border-4" >
+  <div class=".border-opacity-0 .border-current rounded-md bg-white border-4 "  >
     <!-- {{check_url_type}} -->
 
     <!-- nuxt-img では，urlが効かない -->
@@ -16,6 +16,7 @@
               更新日：{{title}}
             </li>
           </ul>
+          <CButton :text="Cbutton_text" id="button_area"/>
       </div>
   </div>
 </template>
@@ -27,7 +28,7 @@
     display: grid;
     justify-items: center;
     align-items: center;
-    grid-template-rows: auto 4em 8em;
+    grid-template-rows: auto 5em 4em 8em;
     grid-template-columns: auto;
   }
 
@@ -44,6 +45,10 @@
     font-size: 1.4em; 
     grid-row: 3/4;
 
+  }
+
+  #button_area{
+    grid-row: 4/5;
   }
 </style>
 
@@ -70,6 +75,8 @@ export default class Ccard  extends Vue {
   // get check_url_type(){
   //   return typeof this.imgsrc;
   // }
+
+  Cbutton_text = "edit"
 
   @Prop({type: String, required: true, default:"any text"})
   //!は，required: trueのときに，デフォルトの値が設定されているプロパティにのみ指定する．NonNullAssertionオペレータと呼ばれる．

@@ -1,16 +1,21 @@
 <template>
   <!-- <link-text text="なんかurl" @on-click="clickUrl()" /> -->
   <div class=" m-2 bg-gray-400">
-      <div>
+      <div class="h-48 bg-red-700">
 
       </div>
-      <div class=" flex flex-row ">
+      <div class=" flex flex-row justify-center m-5 ">
         <CCard :title="Ccard_title" :imgsrc="Ccard_imgsrc"/>
         <CCard :title="Ccard_title" :imgsrc="Ccard_imgsrc"/>
         <CCard :title="Ccard_title" :imgsrc="Ccard_imgsrc"/>
       </div>
   </div>
 </template>
+
+<style scoped>
+
+
+</style>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "nuxt-property-decorator";
