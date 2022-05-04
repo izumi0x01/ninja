@@ -2,12 +2,12 @@
   <!-- <link-text text="なんかurl" @on-click="clickUrl()" /> -->
   <div class=" m-2 bg-gray-400">
       <div class="h-48 bg-red-700">
-
+          
       </div>
       <div class=" flex flex-row justify-center m-5 ">
-        <CCard :title="Ccard_title" :imgsrc="Ccard_imgsrc"/>
-        <CCard :title="Ccard_title" :imgsrc="Ccard_imgsrc"/>
-        <CCard :title="Ccard_title" :imgsrc="Ccard_imgsrc"/>
+        <CCard :title="Ccard_title" :imgsrc="require('@/static/apples.jpg')"/>
+        <CCard :title="Ccard_title" :imgsrc="require('@/static/grapes.jpg')"/>
+        <CCard :title="Ccard_title" :imgsrc="require('@/static/stroberries.jpg')"/>
       </div>
   </div>
 </template>
@@ -33,14 +33,16 @@ import { Component, Prop, Vue } from "nuxt-property-decorator";
 
  
 @Component
-export default class ParentComponent extends Vue {
+export default class index extends Vue {
 
   //propでは，特にプロップの値を取得するよ的な宣言はいらない．（prop自体が親のデータ領域に入っていると考えるとよい）
   Cbutton_text = "huga"
 
   Ccard_title = "hoge_title"
 
-  Ccard_imgsrc = require('@/static/img_product.jpg')
+
+  count = 0;
+
 
 }
 </script>

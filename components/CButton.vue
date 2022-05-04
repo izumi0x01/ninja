@@ -1,8 +1,13 @@
 <template>
- <button class=".border-opacity-0 .border-current rounded-md bg-white border-4 pr-4 pl-4 w-full inline-block" >
-    <!-- {{check_url_type}} -->
+<div>
+ <!-- <button class=".border-opacity-0 .border-current rounded-md bg-white border-4 pr-4 pl-4 w-full inline-block" >
    {{text}}
- </button>
+ </button> -->
+
+  <button @click="countUpProps()">count up props</button>
+  <button @click="countUpEmit()">count up emit</button>
+  
+</div>
 </template>
 
 <style lang="css" scoped>
@@ -33,6 +38,8 @@ export default class CButton extends Vue {
   //!は，required: trueのときに，デフォルトの値が設定されているプロパティにのみ指定する．NonNullAssertionオペレータと呼ばれる．
   //?はデフォルト値を指定していない場合に，undefinedの可能性があることを明示する．
   text?: string;
+
+  // @Prop() private onClick(): () => void;
 
 }
 </script>

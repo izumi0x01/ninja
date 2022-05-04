@@ -83,7 +83,7 @@ export default class Ccard  extends Vue {
   //?はデフォルト値を指定していない場合に，undefinedの可能性があることを明示する．
   title?: string;
 
-  @Prop({type: String, required:true, default:require('@/static/img_product.jpg')})
+  @Prop({type: String, required:true, default:require('@/static/apples.jpg')})
   imgsrc?: string;
 
   //nuxtで日付をどうやって扱うか
