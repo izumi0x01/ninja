@@ -1,9 +1,14 @@
 <template>
   <!-- <link-text text="なんかurl" @on-click="clickUrl()" /> -->
-  <div class="container">
-    <div class="bg-white ">
-      <CCard :title="Ccard_title" :imgsrc="Ccard_imgsrc"/>
-    </div>
+  <div class=" m-2 bg-gray-400">
+      <div>
+
+      </div>
+      <div class=" flex flex-row ">
+        <CCard :title="Ccard_title" :imgsrc="Ccard_imgsrc"/>
+        <CCard :title="Ccard_title" :imgsrc="Ccard_imgsrc"/>
+        <CCard :title="Ccard_title" :imgsrc="Ccard_imgsrc"/>
+      </div>
   </div>
 </template>
 
