@@ -33,6 +33,8 @@ export default {
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
+
+    '@nuxt/image'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -41,5 +43,9 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+  },
+
+  router: {
+    
   }
 }
