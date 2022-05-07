@@ -1,13 +1,15 @@
 <template>
-<div>
- <!-- <button class=".border-opacity-0 .border-current rounded-md bg-white border-4 pr-4 pl-4 w-full inline-block" >
-   {{text}}
- </button> -->
+  <div>
+  <!-- <button class=".border-opacity-0 .border-current rounded-md bg-white border-4 pr-4 pl-4 w-full inline-block" >
+    {{text}}
+  </button> -->
+    <!-- <nuxt-link to="/edit" @click="event => $emit('click', event)" >go to edit page
+    </nuxt-link> -->
 
-  <button @click="countUpProps()">count up props</button>
-  <button @click="countUpEmit()">count up emit</button>
-  
-</div>
+    <button class=".border-opacity-0 .border-current rounded-md bg-white border-4 pr-4 pl-4 w-full inline-block"  @click="event => $emit('click', event)" >
+      {{text}}
+    </button>
+  </div>
 </template>
 
 <style lang="css" scoped>
@@ -40,6 +42,10 @@ export default class CButton extends Vue {
   text?: string;
 
   // @Prop() private onClick(): () => void;
+
+  RedirectToEditPage(){
+    return  this.$router.push('/edit');
+  }
 
 }
 </script>

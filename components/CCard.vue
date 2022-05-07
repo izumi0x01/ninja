@@ -16,7 +16,7 @@
               更新日：{{title}}
             </li>
           </ul>
-          <CButton :text="Cbutton_text" id="button_area"/>
+          <CButton :text="Cbutton_text" id="button_area" @click="$router.push('/edit')"/>
       </div>
   </div>
 </template>
