@@ -73,27 +73,84 @@ export default class edit extends Vue {
   //今は仮段階なので，遷移後に何もデータがないのはさみしい．
   mounted()
   {
+    var canvas = <HTMLCanvasElement>document.getElementById('canvas_area');
+    if (canvas.getContext) {
 
-        var canvas = <HTMLCanvasElement>document.getElementById('canvas_area');
-        if (canvas.getContext) {
+    var context = <CanvasRenderingContext2D>canvas.getContext('2d');
 
-        var context = <CanvasRenderingContext2D>canvas.getContext('2d');
+    //左から20上から40の位置に、幅50高さ100の四角形を描く
+    context.fillRect(20,40,50,100);
 
-        //左から20上から40の位置に、幅50高さ100の四角形を描く
-        context.fillRect(20,40,50,100);
+    //色を指定する
+    context.strokeStyle = 'rgb(00,00,255)'; //枠線の色は青
+    context.fillStyle = 'rgb(255,00,00)'; //塗りつぶしの色は赤
 
-        //色を指定する
-        context.strokeStyle = 'rgb(00,00,255)'; //枠線の色は青
-        context.fillStyle = 'rgb(255,00,00)'; //塗りつぶしの色は赤
+    //左から200上から80の位置に、幅100高さ50の四角の枠線を描く
+    context.strokeRect(200,80,100,50);
 
-        //左から200上から80の位置に、幅100高さ50の四角の枠線を描く
-        context.strokeRect(200,80,100,50);
+    //左から150上から75の位置に、半径60の半円を反時計回り（左回り）で描く
+    context.arc(150,75,60,Math.PI*1,Math.PI*2,true);
+    context.fill();
+    };
+  }
 
-        //左から150上から75の位置に、半径60の半円を反時計回り（左回り）で描く
-        context.arc(150,75,60,Math.PI*1,Math.PI*2,true);
-        context.fill();
+  //async関数の書き方
+  // 基本：async (変数：型) = { await 関数：(promiseが確定するまで待機) }
 
-  };
+  addWork = async (userID: string) =>
+  { 
+    // firebase.firestore => columの生成｛title, 作成時間，更新時間｝，columのidの取得
+    // CANVASをimageに変換し，imageに変換後にidの名前を付ける
+    // firebase.storage => idの名前で画像を保存, 保存先のリンクを取得
+    // firebase.firestore => カラムに画像のリンクを保存
+    
+    //
+    const firestore = firebase.firestore();
+    userID = "test_user" //sample.後で消される．
+    const userRef = firestore.collection(userID);
+    const columID = ""
+    userRef.doc().set({
+        title: "sample_title",
+        created_at: "2022-05-06T12:00:00+0000",
+        updated_at: "2022-05-06T13:00:00+0000",
+        imageURL: ""
+    })
+
+    //ファイルアップロードはblob⇔fileとして受け付けるっぽい．
+    const canvas = <HTMLCanvasElement>document.getElementById('canvas_area');
+    var canvasBlob: any = new Blob();
+    canvas.toBlob(
+      function(Blob){canvasBlob = Blob;},
+      'image/png'
+    );
+
+    //
+    const storage = firebase.storage();
+    const storageRef = storage.ref().child(userID);
+    try{
+      const uploadTask = storageRef.child('${columID}.png').put(canvasBlob);
+    }catch(error)
+    {
+      console.log('firebase_uploadのエラー:' + error);
+    }
+
+    //
+
+  }
+
+  updateWork = async () =>
+  {
+    // firebase.firestore => columの取得
+    // CANVASをimageに変換.
+    // firebase.storage => firestoreに保存されている保存先のリンクを元に，firestoreにアクセス．
+    // firebase.firestore => columの更新｛title, 更新時間｝
+    
+
+
+  }
+
+  deleteWork = async() =>
+  {
 
   }
 
