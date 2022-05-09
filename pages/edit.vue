@@ -10,7 +10,7 @@
         </canvas >
     </div>
     <div class=" border-l-2 " id="right-sidebar">
-      <CButton :text="一覧ページへ" @click="set_works_to_db"/>
+      <CButton :text="save_button_text" @click="addWork"/>
     </div>
     <div class=" border-t-2 " id="toolbar">
     </div>
@@ -107,28 +107,68 @@ export default class edit extends Vue {
     //
     const firestore = firebase.firestore();
     userID = "test_user" //sample.後で消される．
-    const userRef = firestore.collection(userID);
-    const columID = ""
-    userRef.doc().set({
+    const userRef = firestore.collection(userID).doc();
+    var recordID = ""
+    await userRef.set({
         title: "sample_title",
         created_at: "2022-05-06T12:00:00+0000",
         updated_at: "2022-05-06T13:00:00+0000",
         imageURL: ""
+    }).then(() => {
+      recordID = userRef.id
+      console.log("recordID is: " + recordID);
     })
 
     //ファイルアップロードはblob⇔fileとして受け付けるっぽい．
     const canvas = <HTMLCanvasElement>document.getElementById('canvas_area');
     var canvasBlob: any = new Blob();
-    canvas.toBlob(
-      function(Blob){canvasBlob = Blob;},
-      'image/png'
-    );
-
+    try{
+        await canvas.toBlob(
+          function(Blob){
+            canvasBlob = Blob;
+            console.log("BlobData is: " + canvasBlob.text());
+          },
+          'image/png'
+        );
+    }catch(error)
+    {
+        console.log("to change for blob is failed: " + error);
+    }
+    
     //
     const storage = firebase.storage();
     const storageRef = storage.ref().child(userID);
     try{
-      const uploadTask = storageRef.child('${columID}.png').put(canvasBlob);
+      const imgname = recordID + '.png'
+      const uploadTask = storageRef.child(imgname).put(canvasBlob);
+      await uploadTask.on('state_changed',  (snapshot) => {
+        // Observe state change events such as progress, pause, and resume
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+        switch (snapshot.state) {
+          case firebase.storage.TaskState.PAUSED: // or 'paused'
+            console.log('Upload is paused');
+            break;
+          case firebase.storage.TaskState.RUNNING: // or 'running'
+            console.log('Upload is running');
+            break;
+        }
+      },
+      (error) => {
+        // Handle unsuccessful uploads
+        console.log('firebase_upload中のエラー:' + error);
+      },
+      () => {
+        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+          console.log('File available at', downloadURL);
+
+          //ここの書き方めっちゃ汚いのどうにかしたい．
+          userRef.update({
+            imageURL: downloadURL
+          });
+        });
+      });
     }catch(error)
     {
       console.log('firebase_uploadのエラー:' + error);
