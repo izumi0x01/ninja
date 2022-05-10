@@ -122,18 +122,18 @@ export default class edit extends Vue {
     //ファイルアップロードはblob⇔fileとして受け付けるっぽい．
     const canvas = <HTMLCanvasElement>document.getElementById('canvas_area');
     var canvasBlob: any = new Blob();
-    try{
-        await canvas.toBlob(
-          function(Blob){
-            canvasBlob = Blob;
-            console.log("BlobData is: " + canvasBlob.text());
-          },
-          'image/png'
-        );
-    }catch(error)
-    {
-        console.log("to change for blob is failed: " + error);
-    }
+    
+    canvasBlob =  await new Promise((resolve, reject) => {
+      canvas.toBlob(function(Blob){resolve(Blob);},'image/png' );
+    })
+
+    // canvasBlobfunc.then((Blob : Blob) => {
+    //   canvasBlob = Blob;
+    //   console.log("blob data is: " + canvasBlob);
+    //  // console.log("to change for blob is failed: " + error);
+    // })
+
+    console.log("blob data is: " + canvasBlob);
     
     //
     const storage = firebase.storage();
