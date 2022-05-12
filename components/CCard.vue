@@ -10,10 +10,10 @@
           </div>
           <ul class=".self-center " id="info_area"> 
             <li >
-              製作日：{{title}}
+              製作日：{{created_date}}
             </li>
             <li>
-              更新日：{{title}}
+              更新日：{{updated_date}}
             </li>
           </ul>
           <CButton :text="Cbutton_text" id="button_area" @click="$router.push('/edit')"/>
@@ -85,6 +85,12 @@ export default class Ccard  extends Vue {
 
   @Prop({type: String, required:true, default:require('@/static/apples.jpg')})
   imgsrc?: string;
+
+  @Prop({type: String, required:true})
+  updated_date?: string;
+
+  @Prop({type: String, required:true})
+  created_date?: string;
 
   //nuxtで日付をどうやって扱うか
   // @Prop({type: Date, required: true, default:"any text"})
