@@ -7,7 +7,7 @@
     </div>
     <div id="drawarea" >
       <div  class=" w-80 h-80  border-2 border-black">
-        <canvas  id="canvas_area"></canvas>
+        <canvas  width="320px" height="320px" id="canvas_area"></canvas>
       </div>
     </div>
     <div class=" border-l-2 " id="right-sidebar">
@@ -104,8 +104,8 @@ export default class edit extends Vue {
     var recordID = ""
     await userRef.set({
         title: "sample_title",
-        created_at: "2022-05-06T12:00:00+0000",
-        updated_at: "2022-05-06T13:00:00+0000",
+        created_at: "2022-05-16T12:00:00+0000",
+        updated_at: "2022-05-16T13:00:00+0000",
         imageURL: ""
     }).then(() => {
       recordID = userRef.id
