@@ -5,14 +5,16 @@
     <div class=" border-r-2 " id="left-sidebar">
       <CButton :text="home_button_text"  @click="$router.push('/')" />
     </div>
-    <div id="drawarea">
-        <canvas  style="border: 1px solid #000000;" id="canvas_area" width="100px" height="100px" @mousedown="onDragStart" @mouseup="onDragEnd" @mouseout="onDragEnd" @mousemove="draw">
-        </canvas >
+    <div id="drawarea" >
+      <div  class=" w-80 h-80  border-2 border-black">
+        <canvas  id="canvas_area"></canvas>
+      </div>
     </div>
     <div class=" border-l-2 " id="right-sidebar">
       <CButton :text="save_button_text" @click="addWork"/>
     </div>
     <div class=" border-t-2 " id="toolbar">
+      ここには，toolが置かれます．
     </div>
   </div>
 
@@ -39,6 +41,8 @@
   #drawarea{
     grid-row: 1/2;
     grid-column: 2/3;
+    align-self: center;
+    justify-self: center;
   }
 
   #right_sidebar{
@@ -60,10 +64,9 @@
   import "firebase/firestore";
   import firebase from "firebase/app";
   import "firebase/storage";
-import { Context } from "@nuxt/types";
-import { Container } from "postcss";
-
-import { fabric } from "@types/fabric";
+  import { Context } from "@nuxt/types";
+  import { Container } from "postcss";
+  import { fabric } from "fabric";
 
 
 @Component({
@@ -75,73 +78,13 @@ export default class edit extends Vue {
   save_button_text = "作品を保存"
 
 
-  context?: CanvasRenderingContext2D;
+  canvas?: fabric.Canvas;
 
-  isDrag:boolean = false
 
   mounted()
   {
-    var canvas = <HTMLCanvasElement>document.getElementById('canvas_area');
-
-    if (canvas.getContext) {
-
-    this.context = <CanvasRenderingContext2D>canvas.getContext('2d');
-
-    this.context.lineCap = 'round';
-    this.context.lineJoin = 'round';
-    this.context.lineWidth = 5;
-    this.context.strokeStyle = '#000000';
-
-    // typeofで何が入っているかを確認=> 入っていたものはObject
-    console.log(typeof this.context)
-
-    };
-  }
-
-  //描画の最中
-  draw = (e: MouseEvent) => {
-    if(!this.isDrag) return
-
-    // typeofで何が入っているかを確認=> 入っていたものはUndefined
-    console.log(typeof this.context)
-
-    // 実行すると，エラーを吐くので処理を返している
-    if(this.context === undefined)return;
-
-
-    const posX = e.offsetX
-    const posY = e.offsetY
-    this.context.lineTo(posX, posY)
-    this.context.stroke()
-
-  }
-
-  //描画の始め
-  onDragStart = (e: MouseEvent) => {
-      
-    console.log(typeof this.context)
-
-      if(this.context === undefined)return;
-
-      const posX = e.offsetX
-      const posY = e.offsetY
-
-      
-
-      this.context.beginPath()
-      this.context.lineTo(posX, posY)
-      this.context.stroke()
-      
-      this.isDrag = true
-  }
-
-  //描画の終わり
-  onDragEnd = () => { 
-
-      if(this.context === undefined)return;
-
-      this.context.closePath()
-      this.isDrag = false
+    this.canvas = new fabric.Canvas("canvas_area");
+    this.canvas.isDrawingMode = true;
   }
 
   //async関数の書き方
