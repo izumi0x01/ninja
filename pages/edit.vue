@@ -6,7 +6,7 @@
       <CButton :text="home_button_text"  @click="$router.push('/')" />
     </div>
     <div id="drawarea">
-        <canvas id="canvas_area">
+        <canvas  style="border: 1px solid #000000;" id="canvas_area" width="100px" height="100px" @mousedown="onDragStart" @mouseup="onDragEnd" @mouseout="onDragEnd" @mousemove="draw">
         </canvas >
     </div>
     <div class=" border-l-2 " id="right-sidebar">
@@ -60,6 +60,8 @@
   import "firebase/firestore";
   import firebase from "firebase/app";
   import "firebase/storage";
+import { Context } from "@nuxt/types";
+import { Container } from "postcss";
 
 
 @Component({
@@ -70,28 +72,74 @@ export default class edit extends Vue {
   home_button_text = "一覧ページへ"
   save_button_text = "作品を保存"
 
-  //今は仮段階なので，遷移後に何もデータがないのはさみしい．
+
+  context?: CanvasRenderingContext2D;
+
+  isDrag:boolean = false
+
   mounted()
   {
     var canvas = <HTMLCanvasElement>document.getElementById('canvas_area');
+
     if (canvas.getContext) {
 
-    var context = <CanvasRenderingContext2D>canvas.getContext('2d');
+    this.context = <CanvasRenderingContext2D>canvas.getContext('2d');
 
-    //左から20上から40の位置に、幅50高さ100の四角形を描く
-    context.fillRect(20,40,50,100);
+    this.context.lineCap = 'round';
+    this.context.lineJoin = 'round';
+    this.context.lineWidth = 5;
+    this.context.strokeStyle = '#000000';
 
-    //色を指定する
-    context.strokeStyle = 'rgb(00,00,255)'; //枠線の色は青
-    context.fillStyle = 'rgb(255,00,00)'; //塗りつぶしの色は赤
+    // typeofで何が入っているかを確認=> 入っていたものはObject
+    console.log(typeof this.context)
 
-    //左から200上から80の位置に、幅100高さ50の四角の枠線を描く
-    context.strokeRect(200,80,100,50);
-
-    //左から150上から75の位置に、半径60の半円を反時計回り（左回り）で描く
-    context.arc(150,75,60,Math.PI*1,Math.PI*2,true);
-    context.fill();
     };
+  }
+
+  //描画の最中
+  draw = (e: MouseEvent) => {
+    if(!this.isDrag) return
+
+    // typeofで何が入っているかを確認=> 入っていたものはUndefined
+    console.log(typeof this.context)
+
+    // 実行すると，エラーを吐くので処理を返している
+    if(this.context === undefined)return;
+
+
+    const posX = e.offsetX
+    const posY = e.offsetY
+    this.context.lineTo(posX, posY)
+    this.context.stroke()
+
+  }
+
+  //描画の始め
+  onDragStart = (e: MouseEvent) => {
+      
+    console.log(typeof this.context)
+
+      if(this.context === undefined)return;
+
+      const posX = e.offsetX
+      const posY = e.offsetY
+
+      
+
+      this.context.beginPath()
+      this.context.lineTo(posX, posY)
+      this.context.stroke()
+      
+      this.isDrag = true
+  }
+
+  //描画の終わり
+  onDragEnd = () => { 
+
+      if(this.context === undefined)return;
+
+      this.context.closePath()
+      this.isDrag = false
   }
 
   //async関数の書き方
